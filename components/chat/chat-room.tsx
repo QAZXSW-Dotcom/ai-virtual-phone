@@ -6277,6 +6277,11 @@ export function ChatRoom({ session, onBack, onDeleted }: ChatRoomProps) {
             />
             ))}
 
+            {session.isBlacklisted && (
+                <div className="chat-blacklisted-banner">
+                    已将对方加入黑名单，将不再接收对方的消息。
+                </div>
+            )}
             {showConfirmMultiDelete && (
                 <ConfirmDialog
                     title="删除选中消息？"

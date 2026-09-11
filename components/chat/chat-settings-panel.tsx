@@ -298,6 +298,7 @@ export function ChatSettingsPanel({
     const [videoBackground, setVideoBackground] = useState<string>(session.videoBackground || "");
     const [voiceBackground, setVoiceBackground] = useState<string>(session.voiceBackground || "");
     const [isPinned, setIsPinned] = useState(session.isPinned || false);
+    const [isBlacklisted, setIsBlacklisted] = useState(session.isBlacklisted || false);
     // 自定义状态栏（状态区）
     const [statusRegion, setStatusRegion] = useState<StatusRegionConfig>(() => getStatusRegionConfig(session.id));
     const [showStatusRegionDialog, setShowStatusRegionDialog] = useState(false);
@@ -1237,10 +1238,16 @@ export function ChatSettingsPanel({
                 {/* Destructive Actions */}
                 <div className="menu-group">
                     {!session.isGroup && (
+                    <>
+                    <button className="menu-item" onClick={() => { setIsBlacklisted(!isBlacklisted); updateSession({ isBlacklisted: !isBlacklisted }); }}>
+                        <ChatInfoIcon icon={AlertCircle} color="var(--c-danger)" />
+                        <div className="menu-label-group"><span className="menu-label menu-label-danger">{isBlacklisted ? "移出黑名单" : "加入黑名单"}</span></div>
+                    </button>
                     <button className="menu-item" onClick={() => setShowConfirmDelete(true)}>
                         <ChatInfoIcon icon={UserMinus} color="var(--c-danger)" />
                         <div className="menu-label-group"><span className="menu-label menu-label-danger">删除好友</span></div>
                     </button>
+                    </>
                     )}
                     <button className="menu-item" onClick={() => setShowConfirmClearTools(true)}>
                         <ChatInfoIcon icon={Code} color="var(--c-danger)" />
